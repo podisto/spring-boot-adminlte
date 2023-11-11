@@ -25,25 +25,6 @@ public class WebSecurityConfig {
 
     @Autowired
     private DataSource datasource;
-
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/bower_components/**", "/dist/**", "/plugins/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .failureUrl("/login?error")
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
-            .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
-                .permitAll();
-    }*/
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -81,10 +62,10 @@ public class WebSecurityConfig {
         auth.jdbcAuthentication().dataSource(datasource);
 
         // add new user "user" with password "password" - password will be encrypted
-        if (!userDetailsService.userExists("naruto")) {
+        if (!userDetailsService.userExists("podisto")) {
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority("USER"));
-            User userDetails = new User("naruto", encoder.encode("1234"), authorities);
+            User userDetails = new User("podisto", encoder.encode("passer@123"), authorities);
             userDetailsService.createUser(userDetails);
         }
     }
